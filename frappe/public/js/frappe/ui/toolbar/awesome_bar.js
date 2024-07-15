@@ -299,7 +299,7 @@ frappe.search.AwesomeBar = class AwesomeBar {
 		this.options.push({
 			label: `
 				<span class="flex justify-between text-medium">
-					<span class="ellipsis">${__("Search for {0}", [frappe.utils.xss_sanitise(txt).bold()])}</span>
+					<span class="ellipsis">${__("Search for") + " " + frappe.utils.xss_sanitise(txt).bold()}</span>
 					<kbd>↵</kbd>
 				</span>
 			`,
