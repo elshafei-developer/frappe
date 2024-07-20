@@ -23,7 +23,36 @@ frappe._ = function (txt, replace, context = null) {
 	return translated_text;
 };
 
+frappe.__ = function (text) {
+	const isHTML = /<[a-z][\s\S]*>/i.test(text);
+	if (isHTML) {
+		const parser = new DOMParser();
+		const doc = parser.parseFromString(text, "text/html");
+		replaceTextNodes(doc.body);
+
+		function replaceTextNodes(node) {
+			if (node.nodeType === Node.TEXT_NODE) {
+				node.textContent = frappe._(getTextContent(text));
+			} else {
+				node.childNodes.forEach((child) => {
+					replaceTextNodes(child);
+				});
+			}
+		}
+		function getTextContent(text) {
+			let tempDiv = document.createElement("div");
+			tempDiv.innerHTML = text;
+			return tempDiv.textContent || tempDiv.innerText || "";
+		}
+
+		return doc.body.innerHTML;
+	} else {
+		return frappe._(text);
+	}
+};
+
 window.__ = frappe._;
+window.___ = frappe.__;
 
 frappe.get_languages = function () {
 	if (!frappe.languages) {
