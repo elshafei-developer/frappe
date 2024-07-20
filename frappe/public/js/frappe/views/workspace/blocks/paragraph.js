@@ -206,7 +206,7 @@ export default class Paragraph extends Block {
 	set data(data) {
 		this._data = data || {};
 
-		this._element.innerHTML = __(this._data.text) || "";
+		this._element.innerHTML = ___(this._data.text) || "";
 	}
 
 	static get pasteConfig() {
