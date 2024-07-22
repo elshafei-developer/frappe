@@ -23,31 +23,26 @@ frappe._ = function (txt, replace, context = null) {
 	return translated_text;
 };
 
-frappe.__ = function (text) {
-	const isHTML = /<[a-z][\s\S]*>/i.test(text);
+frappe.__ = function (txt, replace, context = null) {
+	const isHTML = /<[a-z][\s\S]*>/i.test(txt);
 	if (isHTML) {
 		const parser = new DOMParser();
-		const doc = parser.parseFromString(text, "text/html");
+		const doc = parser.parseFromString(txt, "text/html");
 		replaceTextNodes(doc.body);
 
 		function replaceTextNodes(node) {
 			if (node.nodeType === Node.TEXT_NODE) {
-				node.textContent = frappe._(getTextContent(text));
+				node.textContent = frappe._(node.textContent, replace, context);
 			} else {
 				node.childNodes.forEach((child) => {
 					replaceTextNodes(child);
 				});
 			}
 		}
-		function getTextContent(text) {
-			let tempDiv = document.createElement("div");
-			tempDiv.innerHTML = text;
-			return tempDiv.textContent || tempDiv.innerText || "";
-		}
 
 		return doc.body.innerHTML;
 	} else {
-		return frappe._(text);
+		return frappe._(txt, replace, context);
 	}
 };
 
