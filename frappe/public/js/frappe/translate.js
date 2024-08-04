@@ -13,15 +13,34 @@ frappe._ = function (txt, replace, context = null) {
 		translated_text = frappe._messages[`${key}:${context}`];
 	}
 
-	if (!translated_text) {
-		translated_text = frappe._messages[key] || txt;
-	}
+		translated_text = frappe._messages[key];
+		if (!translated_text) {
+			const isHTML = /<[a-z][\s\S]*>/i.test(txt);
+			if (isHTML) {
+				const parser = new DOMParser();
+				const doc = parser.parseFromString(txt, "text/html");
+				translateTextNodes(doc.body, replace, context);
+				return doc.body.innerHTML;
+			} else {
+				translated_text = txt;
+			}
+		}
 
 	if (replace && typeof replace === "object") {
 		translated_text = $.format(translated_text, replace);
 	}
 	return translated_text;
 };
+
+function translateTextNodes(node, replace, context) {
+	if (node.nodeType === Node.TEXT_NODE) {
+		node.textContent = frappe._(node.textContent, replace, context);
+	} else {
+		node.childNodes.forEach((child) => {
+			translateTextNodes(child, replace, context);
+		});
+	}
+}
 
 window.__ = frappe._;
 
