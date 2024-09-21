@@ -652,6 +652,10 @@ def msgprint(
 	_raise_exception()
 
 
+def toast(message: str, indicator: Literal["blue", "green", "orange", "red", "yellow"] | None = None):
+	frappe.msgprint(message, indicator=indicator, alert=True)
+
+
 def clear_messages():
 	local.message_log = []
 
@@ -694,6 +698,10 @@ def throw(
 		as_list=as_list,
 		primary_action=primary_action,
 	)
+
+
+def throw_permission_error():
+	throw(_("Not permitted"), PermissionError)
 
 
 def create_folder(path, with_init=False):
@@ -2403,8 +2411,11 @@ def logger(module=None, with_more_info=False, allow_site=True, filter=None, max_
 
 
 def get_desk_link(doctype, name):
-	html = '<a href="/app/Form/{doctype}/{name}" style="font-weight: bold;">{doctype_local} {name}</a>'
-	return html.format(doctype=doctype, name=name, doctype_local=_(doctype))
+	meta = get_meta(doctype)
+	title = get_value(doctype, name, meta.get_title_field())
+
+	html = '<a href="/app/Form/{doctype}/{name}" style="font-weight: bold;">{doctype_local} {title_local}</a>'
+	return html.format(doctype=doctype, name=name, doctype_local=_(doctype), title_local=_(title))
 
 
 def bold(text: str) -> str:

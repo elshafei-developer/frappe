@@ -3,12 +3,13 @@ import os
 from . import __version__ as app_version
 
 app_name = "frappe"
-app_title = "Frappe Framework"
+app_title = "Framework"
 app_publisher = "Frappe Technologies"
 app_description = "Full stack web framework with Python, Javascript, MariaDB, Redis, Node"
 app_license = "MIT"
 app_logo_url = "/assets/frappe/images/frappe-framework-logo.svg"
 develop_version = "15.x.x-develop"
+app_home = "/app/build"
 
 app_email = "developers@frappe.io"
 
@@ -197,6 +198,10 @@ doc_events = {
 
 scheduler_events = {
 	"cron": {
+		# 5 minutes
+		"0/5 * * * *": [
+			"frappe.email.doctype.notification.notification.trigger_offset_alerts",
+		],
 		# 15 minutes
 		"0/15 * * * *": [
 			"frappe.oauth.delete_oauth2_data",
@@ -460,15 +465,15 @@ export_python_type_annotations = True
 
 standard_navbar_items = [
 	{
-		"item_label": "My Profile",
-		"item_type": "Route",
-		"route": "/app/user-profile",
+		"item_label": "User Settings",
+		"item_type": "Action",
+		"action": "frappe.ui.toolbar.route_to_user()",
 		"is_standard": 1,
 	},
 	{
-		"item_label": "My Settings",
+		"item_label": "Workspace Settings",
 		"item_type": "Action",
-		"action": "frappe.ui.toolbar.route_to_user()",
+		"action": "frappe.quick_edit('Workspace Settings')",
 		"is_standard": 1,
 	},
 	{
@@ -487,6 +492,12 @@ standard_navbar_items = [
 		"item_label": "View Website",
 		"item_type": "Action",
 		"action": "frappe.ui.toolbar.view_website()",
+		"is_standard": 1,
+	},
+	{
+		"item_label": "Apps",
+		"item_type": "Route",
+		"route": "/apps",
 		"is_standard": 1,
 	},
 	{
