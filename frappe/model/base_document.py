@@ -1136,6 +1136,9 @@ class BaseDocument:
 			if data_field_options == "IBAN":
 				validate_iban(data, throw=True)
 
+			if data_field_options == "IP":
+				frappe.utils.validate_ip(data, throw=True)
+
 	def _validate_constants(self):
 		if frappe.flags.in_import or self.is_new() or self.flags.ignore_validate_constants:
 			return

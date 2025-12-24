@@ -54,6 +54,10 @@ window.validate_url = function (txt) {
 	return frappe.utils.validate_type(txt, "url");
 };
 
+window.validate_ip = function (txt) {
+	return frappe.utils.validate_type(txt, "ip");
+};
+
 window.nth = function (number) {
 	number = cint(number);
 	var s = "th";

@@ -307,6 +307,9 @@ frappe.ui.form.ControlData = class ControlData extends frappe.ui.form.ControlInp
 		} else if (this.df.options == "URL") {
 			this.df.invalid = !validate_url(v);
 			return v;
+		} else if (this.df.options == "IP") {
+			this.df.invalid = !validate_ip(v);
+			return v;
 		} else {
 			return v;
 		}

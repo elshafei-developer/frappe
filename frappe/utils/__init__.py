@@ -289,6 +289,20 @@ def is_valid_iban(iban: str) -> bool:
 	return to_check % 97 == 1
 
 
+def validate_ip(ip: str, throw: bool = False) -> bool:
+	if not ip:
+		return True
+	from ipaddress import ip_address
+
+	try:
+		ip_address(ip)
+		return True
+	except ValueError:
+		if throw:
+			frappe.throw(frappe._("'{0}' is not a valid IP Address").format(frappe.bold(ip)))
+		return False
+
+
 def random_string(length: int) -> str:
 	"""generate a random string"""
 	import string

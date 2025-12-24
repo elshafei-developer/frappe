@@ -283,15 +283,11 @@ Object.assign(frappe.utils, {
 		if (!txt) return txt;
 
 		var content = $("<div></div>").html(txt);
-		content
-			.find("blockquote")
-			.parent("blockquote")
-			.addClass("hidden")
-			.before(
-				'<p><a class="text-muted btn btn-default toggle-blockquote" style="padding: 2px 7px 0px; line-height: 1;"> \
+		content.find("blockquote").parent("blockquote").addClass("hidden").before(
+			'<p><a class="text-muted btn btn-default toggle-blockquote" style="padding: 2px 7px 0px; line-height: 1;"> \
 					• • • \
 				</a></p>'
-			);
+		);
 		return content.html();
 	},
 	scroll_page_to_top() {
@@ -466,6 +462,10 @@ Object.assign(frappe.utils, {
 				break;
 			case "dateIso":
 				regExp = /^(\d{4})\D?(0[1-9]|1[0-2])\D?([12]\d|0[1-9]|3[01])$/;
+				break;
+			case "ip":
+				regExp =
+					/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
 				break;
 			default:
 				return false;
