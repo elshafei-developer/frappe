@@ -12,6 +12,7 @@ from frappe.deprecation_dumpster import deprecation_warning
 from frappe.model.utils import is_virtual_doctype
 from frappe.model.utils.user_settings import get_user_settings, update_user_settings
 from frappe.query_builder.utils import Column
+from frappe.utils import sbool
 
 
 class DatabaseQuery:
@@ -113,9 +114,16 @@ class DatabaseQuery:
 			# if `filters` is a list of strings, its probably fields
 			filters, fields = fields, filters
 
+		# Set fields to the requested field or `name` if none specified
+		if not fields:
+			fields = [pluck or "name"]
+
+		self.fields = fields
+
 		# Handle virtual doctypes before any other processing
 		if is_virtual_doctype(self.doctype):
 			return self._handle_virtual_doctype(
+				fields,
 				filters,
 				or_filters,
 				start,
@@ -162,10 +170,6 @@ class DatabaseQuery:
 			if limit is None:
 				limit = page_length
 
-		# Set fields to the requested field or `name` if none specified
-		if not fields:
-			fields = [pluck or "name"]
-
 		# Check if table exists before running query
 		from frappe.model.meta import get_table_columns
 
@@ -199,8 +203,7 @@ class DatabaseQuery:
 		query = frappe.qb.get_query(**kwargs)
 
 		if not run:
-			# Return the SQL query string instead of executing
-			return str(query.get_sql())
+			return query
 
 		# Run the query
 		if pluck:
@@ -209,7 +212,7 @@ class DatabaseQuery:
 			result = query.run(debug=debug, as_dict=not as_list, update=update)
 
 		# Add comment count if requested and not as_list
-		if with_comment_count and not as_list and self.doctype:
+		if sbool(with_comment_count) and not as_list and self.doctype:
 			self._add_comment_count(result)
 
 		# Save user settings if requested
@@ -285,6 +288,7 @@ class DatabaseQuery:
 
 	def _handle_virtual_doctype(
 		self,
+		fields: list[str] | tuple[str, ...] | str | None,
 		filters: dict[str, FilterValue] | FilterValue | list[list | FilterValue] | None,
 		or_filters: dict[str, FilterValue] | FilterValue | list[list | FilterValue] | None,
 		start: int | None,
@@ -331,6 +335,7 @@ class DatabaseQuery:
 
 		_page_length = page_length or limit or limit_page_length or 20
 		kwargs = {
+			"fields": fields,
 			"filters": filters,
 			"or_filters": or_filters,
 			"start": start or offset or limit_start or 0,

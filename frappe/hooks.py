@@ -38,9 +38,10 @@ app_include_css = [
 	"report.bundle.css",
 ]
 app_include_icons = [
+	"/assets/frappe/icons/lucide/icons.svg",
 	"/assets/frappe/icons/timeless/icons.svg",
 	"/assets/frappe/icons/espresso/icons.svg",
-	"/assets/frappe/icons/icons.svg",
+	"/assets/frappe/icons/desktop_icons/alphabets.svg",
 ]
 
 doctype_js = {
@@ -51,6 +52,7 @@ doctype_js = {
 web_include_js = ["website_script.js"]
 web_include_css = []
 web_include_icons = [
+	"/assets/frappe/icons/lucide/icons.svg",
 	"/assets/frappe/icons/timeless/icons.svg",
 	"/assets/frappe/icons/espresso/icons.svg",
 ]
@@ -64,7 +66,7 @@ website_route_rules = [
 ]
 
 website_redirects = [
-	{"source": r"/app/(.*)", "target": r"/desk/\1"},
+	{"source": r"/app/(.*)", "target": r"/desk/\1", "forward_query_parameters": True},
 	{"source": "/apps", "target": "/desk"},
 	{"source": "/app", "target": "/desk"},
 ]
@@ -544,7 +546,7 @@ standard_help_items = [
 	{
 		"item_label": "System Health",
 		"item_type": "Route",
-		"route": "/app/system-health-report",
+		"route": "/desk/system-health-report",
 		"is_standard": 1,
 	},
 	{

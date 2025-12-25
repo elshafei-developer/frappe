@@ -6,19 +6,24 @@ frappe.provide("frappe.search");
 
 frappe.ui.toolbar.Toolbar = class {
 	constructor() {
-		$("header").replaceWith(
-			frappe.render_template("navbar", {
-				avatar: frappe.avatar(frappe.session.user, "avatar-medium"),
-				navbar_settings: frappe.boot.navbar_settings,
-			})
-		);
+		if (
+			frappe.boot.read_only ||
+			frappe.boot.user.impersonated_by ||
+			(!localStorage.getItem("dismissed_announcement_widget") &&
+				strip_html(frappe.boot.navbar_settings.announcement_widget) != "") ||
+			frappe.is_mobile()
+		) {
+			$("header").replaceWith(
+				frappe.render_template("navbar", {
+					navbar_settings: frappe.boot.navbar_settings,
+				})
+			);
+		}
 		$(".dropdown-toggle").dropdown();
 		$("#toolbar-user a[href]").click(function () {
 			$(this).closest(".dropdown-menu").prev().dropdown("toggle");
 		});
 
-		// this.setup_awesomebar();
-		this.setup_help();
 		this.setup_read_only_mode();
 		this.setup_announcement_widget();
 		this.make();
@@ -34,9 +39,7 @@ frappe.ui.toolbar.Toolbar = class {
 	change_toolbar() {
 		$(".navbar .container").css("max-width", "43%");
 		$(".navbar-brand").css("display", "block");
-		$(".navbar-brand .app-logo").attr("src", frappe.boot.navbar_settings.app_logo);
 		let nav_elements = $(".navbar-nav").children();
-		$("form").css("display", "none");
 		$("");
 		for (let i = 0; i < nav_elements.length - 1; i++) {
 			$(nav_elements[i]).attr("style", "display: none !important");
@@ -99,92 +102,12 @@ frappe.ui.toolbar.Toolbar = class {
 		}
 	}
 
-	setup_help() {
-		if (!frappe.boot.desk_settings.notifications) {
-			// hide the help section
-			$(".navbar .vertical-bar").removeClass("d-sm-block");
-			$(".dropdown-help").removeClass("d-lg-block");
-			return;
-		}
-		frappe.provide("frappe.help");
-		frappe.help.show_results = show_results;
-
-		this.search = new frappe.search.SearchDialog();
-		frappe.provide("frappe.searchdialog");
-		frappe.searchdialog.search = this.search;
-
-		$(".dropdown-help .dropdown-toggle").on("click", function () {
-			$(".dropdown-help input").focus();
-		});
-
-		$(".dropdown-help .dropdown-menu").on("click", "input, button", function (e) {
-			e.stopPropagation();
-		});
-
-		$("#input-help").on("keydown", function (e) {
-			if (e.which == 13) {
-				$(this).val("");
-			}
-		});
-
-		$(document).on("page-change", function () {
-			var $help_links = $(".dropdown-help #help-links");
-			$help_links.html("");
-
-			var route = frappe.get_route_str();
-			var breadcrumbs = route.split("/");
-
-			var links = [];
-			for (let i = 0; i < breadcrumbs.length; i++) {
-				var r = route.split("/", i + 1);
-				var key = r.join("/");
-				var help_links = frappe.help.help_links[key] || [];
-				links = $.merge(links, help_links);
-			}
-
-			if (links.length === 0) {
-				$help_links.next().hide();
-			} else {
-				$help_links.next().show();
-			}
-
-			for (let i = 0; i < links.length; i++) {
-				var link = links[i];
-				var url = link.url;
-				$("<a>", {
-					href: url,
-					class: "dropdown-item",
-					text: __(link.label),
-					target: "_blank",
-				}).appendTo($help_links);
-			}
-
-			$(".dropdown-help .dropdown-menu").on("click", "a", show_results);
-		});
-
-		var $result_modal = frappe.get_modal("", "");
-		$result_modal.addClass("help-modal");
-
-		$(document).on("click", ".help-modal a", show_results);
-
-		function show_results(e) {
-			//edit links
-			var href = e.target.href;
-			if (href.indexOf("blob") > 0) {
-				window.open(href, "_blank");
-			}
-			var path = $(e.target).attr("data-path");
-			if (path) {
-				e.preventDefault();
-			}
-		}
-	}
-
 	add_back_button() {
 		if (!frappe.is_mobile()) return;
 		this.navbar = $(".navbar-brand");
+		this.menu = this.navbar.html();
 		let doctype = frappe.get_route()[1];
-		let list_view_route = `/app/${frappe.router.convert_from_standard_route([
+		let list_view_route = `/desk/${frappe.router.convert_from_standard_route([
 			"list",
 			doctype,
 		])}`;
@@ -194,17 +117,11 @@ frappe.ui.toolbar.Toolbar = class {
 	}
 	show_app_logo() {
 		let route = frappe.get_route();
-		if (route[0] == "List") {
-			this.navbar.html("");
-			this.navbar.html(this.app_logo);
-			this.navbar.attr("href", "");
-			this.bind_click();
-		} else if (route[0] == "Form") {
+		if (route[0] == "Form") {
 			this.add_back_button();
+		} else {
+			this.navbar.html(this.menu);
 		}
-	}
-	set_app_logo(logo_url) {
-		$(".navbar-brand .app-logo").attr("src", logo_url);
 	}
 };
 

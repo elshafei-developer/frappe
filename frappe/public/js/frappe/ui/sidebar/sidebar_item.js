@@ -4,7 +4,10 @@ frappe.ui.sidebar_item.TypeLink = class SidebarItem {
 		this.item = opts.item;
 		this.container = opts.container;
 		this.nested_items = opts.item.nested_items || [];
-		this.workspace_title = $(".body-sidebar").attr("data-title").toLowerCase();
+		this.workspace_title =
+			($(".body-sidebar").attr("data-title") &&
+				$(".body-sidebar").attr("data-title").toLowerCase()) ||
+			frappe.app.sidebar.sidebar_title;
 		this.prepare(opts);
 		this.make();
 	}
@@ -17,7 +20,7 @@ frappe.ui.sidebar_item.TypeLink = class SidebarItem {
 					name: this.item.link_to,
 				};
 
-				if (this.item.report || !frappe.app.sidebar.edit_mode) {
+				if (this.item.report || !frappe.app.sidebar.editor.edit_mode) {
 					args.is_query_report =
 						this.item.report.report_type === "Query Report" ||
 						this.item.report.report_type == "Script Report";
@@ -51,20 +54,22 @@ frappe.ui.sidebar_item.TypeLink = class SidebarItem {
 				});
 			}
 		}
-		return path;
+		if (path) {
+			return encodeURI(path);
+		}
 	}
 	prepare() {}
 	make() {
 		this.path = this.get_path();
 		this.set_suffix();
 		if (!this.item.icon && !(this.item.child && this.item.parent.indent)) {
-			this.item.icon = "list-alt";
+			this.item.icon = "list";
 		}
 		this.wrapper = $(
 			frappe.render_template("sidebar_item", {
 				item: this.item,
 				path: this.path,
-				edit_mode: frappe.app.sidebar.edit_mode,
+				edit_mode: frappe.app.sidebar.editor.edit_mode,
 			})
 		);
 		$(this.container).append(this.wrapper);
@@ -99,22 +104,21 @@ frappe.ui.sidebar_item.TypeLink = class SidebarItem {
 				label: "Edit Item",
 				icon: "pen",
 				onClick: () => {
-					frappe.app.sidebar.edit_item(me.item);
+					frappe.app.sidebar.editor.perform_action("edit", me.item);
 				},
 			},
 			{
 				label: "Add Item Below",
 				icon: "add",
 				onClick: () => {
-					frappe.app.sidebar.add_below(me.item);
+					frappe.app.sidebar.editor.perform_action("add_below", me.item);
 				},
 			},
 			{
 				label: "Duplicate",
 				icon: "copy",
 				onClick: () => {
-					console.log("Start Deleting");
-					frappe.app.sidebar.duplicate_item(me.item);
+					frappe.app.sidebar.editor.perform_action("duplicate", me.item);
 				},
 			},
 			{
@@ -122,8 +126,7 @@ frappe.ui.sidebar_item.TypeLink = class SidebarItem {
 				icon: "trash-2",
 				onClick: () => {
 					console.log(me.item);
-					frappe.app.sidebar.delete_item(me.item);
-					console.log("Start Deleting");
+					frappe.app.sidebar.editor.perform_action("delete", me.item);
 				},
 			},
 		];
@@ -271,7 +274,7 @@ frappe.ui.sidebar_item.TypeSectionBreak = class SectionBreakSidebarItem extends 
 			this.section_breaks_state[this.workspace_title] = {};
 		}
 
-		const title = this.$drop_icon.parent().parent().attr("title");
+		const title = this.wrapper.attr("title");
 		this.section_breaks_state[this.workspace_title][title] = this.collapsed;
 
 		localStorage.setItem("section-breaks-state", JSON.stringify(this.section_breaks_state));
@@ -285,14 +288,14 @@ frappe.ui.sidebar_item.TypeSectionBreak = class SectionBreakSidebarItem extends 
 				icon: "pen",
 				onClick: () => {
 					console.log("Start ediitng");
-					frappe.app.sidebar.edit_item(me.item);
+					frappe.app.sidebar.editor.perform_action("edit", me.item);
 				},
 			},
 			{
 				label: "Add Nested Items",
 				icon: "add",
 				onClick: () => {
-					frappe.app.sidebar.show_new_dialog({
+					frappe.app.sidebar.editor.show_new_dialog({
 						nested: true,
 						parent_item: me.item,
 					});
@@ -302,17 +305,14 @@ frappe.ui.sidebar_item.TypeSectionBreak = class SectionBreakSidebarItem extends 
 				label: "Duplicate",
 				icon: "copy",
 				onClick: () => {
-					console.log("Start Deleting");
-					frappe.app.sidebar.duplicate_item(me.item);
+					frappe.app.sidebar.editor.perform_action("duplicate", me.item);
 				},
 			},
 			{
 				label: "Delete",
 				icon: "trash-2",
 				onClick: () => {
-					console.log(me.item);
-					frappe.app.sidebar.delete_item(me.item);
-					console.log("Start Deleting");
+					frappe.app.sidebar.editor.perform_action("delete", me.item);
 				},
 			},
 		];
