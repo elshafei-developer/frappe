@@ -350,10 +350,6 @@ frappe.ui.Sidebar = class Sidebar {
 			this.toggle_width();
 		});
 
-		this.wrapper.find(".body-sidebar .about-sidebar-link").on("click", () => {
-			frappe.ui.toolbar.show_about();
-		});
-
 		this.wrapper.find(".overlay").on("click", () => {
 			this.close();
 		});
@@ -443,7 +439,6 @@ frappe.ui.Sidebar = class Sidebar {
 	make_sidebar() {
 		this.empty();
 		this.wrapper.find(".collapse-sidebar-link").removeClass("hidden");
-		this.wrapper.find(".about-sidebar-link").removeClass("hidden");
 		if (this.editor.edit_mode) {
 			this.create_sidebar(this.editor.new_sidebar_items);
 		} else {
@@ -462,9 +457,7 @@ frappe.ui.Sidebar = class Sidebar {
 		this.empty();
 		if (items && items.length > 0) {
 			items.forEach((w) => {
-				if (!w.display_depends_on || frappe.utils.eval(w.display_depends_on)) {
-					this.add_item(this.$items_container, w);
-				}
+				this.add_item(this.$items_container, w);
 			});
 		} else {
 			let no_items_message = $(
@@ -472,7 +465,6 @@ frappe.ui.Sidebar = class Sidebar {
 			);
 			this.wrapper.find(".sidebar-items").append(no_items_message);
 			this.wrapper.find(".collapse-sidebar-link").addClass("hidden");
-			this.wrapper.find(".about-sidebar-link").addClass("hidden");
 		}
 		if (this.edit_mode) {
 			$(".edit-menu").removeClass("hidden");
@@ -576,22 +568,23 @@ frappe.ui.Sidebar = class Sidebar {
 
 	expand_sidebar() {
 		let direction;
+		const is_rtl = frappe.utils.is_rtl();
 		if (this.sidebar_expanded) {
 			this.wrapper.addClass("expanded");
-			direction = "right";
+			direction = is_rtl ? "left" : "right";
 			$('[data-toggle="tooltip"]').tooltip("dispose");
 			this.wrapper.find(".avatar-name-email").show();
-			this.wrapper.find(".about-sidebar-link").show();
+			this.wrapper.find(".onboarding-sidebar span").show();
 		} else {
 			this.wrapper.removeClass("expanded");
-			direction = "left";
+			direction = is_rtl ? "right" : "left";
 			$('[data-toggle="tooltip"]').tooltip({
 				boundary: "window",
 				container: "body",
 				trigger: "hover",
 			});
 			this.wrapper.find(".avatar-name-email").hide();
-			this.wrapper.find(".about-sidebar-link").hide();
+			this.wrapper.find(".onboarding-sidebar span").hide();
 		}
 
 		localStorage.setItem("sidebar-expanded", this.sidebar_expanded);
