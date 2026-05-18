@@ -25,7 +25,9 @@ if TYPE_CHECKING:
 doctype_python_modules = {}
 
 
-def export_module_json(doc: "Document", is_standard: bool, module: str) -> str | None:
+def export_module_json(
+	doc: "Document", is_standard: bool, module: str, *, create_init: bool | None = None
+) -> str | None:
 	"""Make a folder for the given doc and add its json file (make it a standard object that will be synced).
 
 	Return the absolute file_path without the extension.
@@ -35,8 +37,18 @@ def export_module_json(doc: "Document", is_standard: bool, module: str) -> str |
 	if not frappe.flags.in_import and is_standard and frappe.conf.developer_mode:
 		from frappe.modules.export_file import export_to_files
 
+		if create_init is None:
+			# fall back to old default behavior if new parameter is not provided
+			_create_init = is_standard
+		else:
+			_create_init = create_init
+
 		# json
-		export_to_files(record_list=[[doc.doctype, doc.name]], record_module=module, create_init=is_standard)
+		export_to_files(
+			record_list=[[doc.doctype, doc.name]],
+			record_module=module,
+			create_init=_create_init,
+		)
 
 		return os.path.join(
 			frappe.get_module_path(module), scrub(doc.doctype), scrub(doc.name), scrub(doc.name)
@@ -176,6 +188,24 @@ def sync_customizations_for_doctype(data: dict, folder: str, filename: str = "")
 							custom_field.flags.ignore_validate = True
 							custom_field.update(d)
 							custom_field.db_update()
+				case "DocType Link":
+					for d in data[key]:
+						link = frappe.db.get_value(
+							"DocType Link",
+							{
+								"parent": doc_type,
+								"link_doctype": d.get("link_doctype"),
+								"link_fieldname": d.get("link_fieldname"),
+							},
+						)
+						if not link:
+							d["owner"] = "Administrator"
+							_insert(d)
+						else:
+							doc_link = frappe.get_doc("DocType Link", link)
+							doc_link.flags.ignore_validate = True
+							doc_link.update(d)
+							doc_link.db_update()
 				case "Property Setter":
 					# Property setter implement their own deduplication, we can just sync them as is
 					for d in data[key]:
@@ -204,6 +234,9 @@ def sync_customizations_for_doctype(data: dict, folder: str, filename: str = "")
 	if data["custom_fields"]:
 		sync("custom_fields", "Custom Field", "dt")
 		update_schema = True
+
+	if data.get("links", False):
+		sync("links", "DocType Link", "parent")
 
 	if data["property_setters"]:
 		sync("property_setters", "Property Setter", "doc_type")
