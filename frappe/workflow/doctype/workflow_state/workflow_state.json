@@ -40,7 +40,7 @@
  "icon": "fa fa-flag",
  "idx": 1,
  "links": [],
- "modified": "2024-03-23 16:04:05.395556",
+ "modified": "2026-06-14",
  "modified_by": "Administrator",
  "module": "Workflow",
  "name": "Workflow State",
@@ -56,10 +56,6 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
-  },
-  {
-   "role": "Desk User",
-   "select": 1
   }
  ],
  "quick_entry": 1,

@@ -88,7 +88,7 @@
  "icon": "fa fa-file-text",
  "idx": 1,
  "links": [],
- "modified": "2026-06-24 16:54:57.011270",
+ "modified": "2026-06-24",
  "modified_by": "Administrator",
  "module": "Desk",
  "name": "Note",
@@ -120,19 +120,14 @@
    "write": 1
   },
   {
-   "export": 1,
-   "print": 1,
    "read": 1,
-   "report": 1,
    "role": "Desk User"
   },
   {
    "create": 1,
    "delete": 1,
-   "email": 1,
    "if_owner": 1,
    "role": "Desk User",
-   "share": 1,
    "write": 1
   },
   {

@@ -37,7 +37,7 @@
   }
  ],
  "links": [],
- "modified": "2024-03-23 16:03:34.487641",
+ "modified": "2026-06-14",
  "modified_by": "Administrator",
  "module": "Website",
  "name": "Personal Data Download Request",
@@ -54,11 +54,6 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
-  },
-  {
-   "if_owner": 1,
-   "read": 1,
-   "role": "All"
   }
  ],
  "sort_field": "creation",

@@ -261,7 +261,7 @@
  ],
  "in_create": 1,
  "links": [],
- "modified": "2026-05-30 23:29:46.848382",
+ "modified": "2026-06-14",
  "modified_by": "Administrator",
  "module": "Desk",
  "name": "Workspace",
@@ -288,7 +288,7 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Desk User",
+   "role": "System Manager",
    "share": 1,
    "write": 1
   }

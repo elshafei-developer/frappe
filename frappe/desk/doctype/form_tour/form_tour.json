@@ -178,7 +178,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-11-17 13:06:48.120836",
+ "modified": "2026-06-14",
  "modified_by": "Administrator",
  "module": "Desk",
  "name": "Form Tour",
@@ -196,10 +196,6 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
-  },
-  {
-   "read": 1,
-   "role": "Desk User"
   }
  ],
  "sort_field": "creation",

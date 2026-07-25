@@ -139,7 +139,7 @@
    "link_fieldname": "module"
   }
  ],
- "modified": "2024-09-18 12:39:19.512528",
+ "modified": "2026-06-14",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Module Def",
@@ -169,9 +169,7 @@
   },
   {
    "read": 1,
-   "report": 1,
-   "role": "All",
-   "select": 1
+   "role": "All"
   }
  ],
  "show_name_in_global_search": 1,

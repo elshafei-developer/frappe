@@ -364,23 +364,13 @@
  "icon": "fa fa-calendar",
  "idx": 1,
  "links": [],
- "modified": "2025-10-07 08:53:24.732646",
+ "modified": "2026-06-14",
  "modified_by": "shariq@frappe.io",
  "module": "Desk",
  "name": "Event",
  "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
-  {
-   "create": 1,
-   "email": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Desk User",
-   "share": 1,
-   "write": 1
-  },
   {
    "create": 1,
    "delete": 1,
@@ -393,15 +383,6 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "All",
-   "share": 1
   }
  ],
  "read_only": 1,

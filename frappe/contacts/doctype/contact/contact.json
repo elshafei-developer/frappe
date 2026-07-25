@@ -257,7 +257,7 @@
  "image_field": "image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-03-23 16:01:30.937045",
+ "modified": "2026-06-14",
  "modified_by": "Administrator",
  "module": "Contacts",
  "name": "Contact",
@@ -356,16 +356,6 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Purchase User",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "email": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
    "role": "Maintenance User",
    "share": 1,
    "write": 1
@@ -382,10 +372,8 @@
   },
   {
    "create": 1,
-   "delete": 1,
    "if_owner": 1,
    "read": 1,
-   "report": 1,
    "role": "All",
    "write": 1
   }

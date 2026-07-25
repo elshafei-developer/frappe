@@ -27,7 +27,7 @@
  ],
  "in_create": 1,
  "links": [],
- "modified": "2024-03-23 16:02:16.763875",
+ "modified": "2026-06-14",
  "modified_by": "Administrator",
  "module": "Desk",
  "name": "Dashboard Settings",
@@ -35,13 +35,8 @@
  "owner": "Administrator",
  "permissions": [
   {
-   "email": 1,
-   "export": 1,
-   "print": 1,
    "read": 1,
-   "report": 1,
    "role": "Desk User",
-   "share": 1,
    "write": 1
   }
  ],

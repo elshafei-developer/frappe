@@ -85,7 +85,7 @@
   }
  ],
  "links": [],
- "modified": "2026-05-30 23:26:46.860235",
+ "modified": "2026-06-14",
  "modified_by": "Administrator",
  "module": "Integrations",
  "name": "Token Cache",
@@ -96,12 +96,6 @@
    "delete": 1,
    "read": 1,
    "role": "System Manager"
-  },
-  {
-   "delete": 1,
-   "if_owner": 1,
-   "read": 1,
-   "role": "All"
   }
  ],
  "row_format": "Dynamic",
