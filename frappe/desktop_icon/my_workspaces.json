@@ -10,12 +10,16 @@
  "label": "My Workspaces",
  "link_to": "My Workspaces",
  "link_type": "Workspace Sidebar",
- "modified": "2026-01-01 20:07:01.338117",
+ "modified": "2026-06-17",
  "modified_by": "Administrator",
  "name": "My Workspaces",
  "owner": "Administrator",
  "restrict_removal": 1,
- "roles": [],
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ],
  "sidebar": "My Workspaces",
  "standard": 1
 }

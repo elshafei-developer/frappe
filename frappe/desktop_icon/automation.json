@@ -10,12 +10,16 @@
  "label": "Automation",
  "link_to": "Automation",
  "link_type": "Workspace Sidebar",
- "modified": "2026-01-01 20:07:01.577056",
+ "modified": "2026-06-17",
  "modified_by": "Administrator",
  "name": "Automation",
  "owner": "Administrator",
  "parent_icon": "Framework",
  "restrict_removal": 0,
- "roles": [],
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ],
  "standard": 1
 }
