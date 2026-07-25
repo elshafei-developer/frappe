@@ -1468,7 +1468,7 @@ class BaseDocument:
 			elif meta_df:
 				print_hide = meta_df.print_hide
 
-		return print_hide
+		return print_hide or df.hidden
 
 	def in_format_data(self, fieldname):
 		"""Return True if shown via Print Format::`format_data` property.

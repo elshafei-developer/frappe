@@ -20,6 +20,7 @@
   "cb00",
   "status",
   "salutation",
+  "department",
   "designation",
   "gender",
   "phone",
@@ -38,7 +39,6 @@
   "links",
   "is_primary_contact",
   "more_info",
-  "department",
   "unsubscribed"
  ],
  "fields": [
@@ -166,6 +166,7 @@
    "default": "0",
    "fieldname": "unsubscribed",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Unsubscribed"
   },
   {
@@ -216,6 +217,7 @@
    "default": "0",
    "fieldname": "sync_with_google_contacts",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Sync with Google Contacts"
   },
   {

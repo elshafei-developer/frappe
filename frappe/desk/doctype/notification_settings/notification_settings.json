@@ -37,7 +37,7 @@
    "label": "Email Settings"
   },
   {
-   "default": "1",
+   "default": "0",
    "fieldname": "enable_email_notifications",
    "fieldtype": "Check",
    "label": "Enable Email Notifications"

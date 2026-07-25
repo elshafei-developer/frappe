@@ -259,4 +259,13 @@ class DeskViews:
 			for r in non_permitted_reports:
 				has_role.pop(r, None)
 
+			reports_without_ref_access = {
+				name
+				for name, info in has_role.items()
+				if info.get("ref_doctype")
+				and not has_permission(info["ref_doctype"], "report", user=user, print_logs=False)
+			}
+			for r in reports_without_ref_access:
+				has_role.pop(r, None)
+
 		return has_role

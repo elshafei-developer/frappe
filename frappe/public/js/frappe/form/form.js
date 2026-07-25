@@ -1282,12 +1282,6 @@ frappe.ui.form.Form = class FrappeForm {
 
 	show_report_bug_link() {
 		if (this.meta.beta) {
-			this.add_web_link(
-				"https://github.com/frappe/" +
-					frappe.boot.module_app[frappe.scrub(this.meta.module)] +
-					"/issues/new",
-				__("Report bug")
-			);
 		}
 	}
 

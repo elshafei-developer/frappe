@@ -177,8 +177,8 @@ def get_translations_from_apps(lang, apps=None):
 	from frappe.gettext.translate import get_translations_from_mo
 
 	for app in apps or frappe.get_installed_apps(_ensure_on_bench=True):
-		translations.update(get_translations_from_csv(lang, app) or {})
 		translations.update(get_translations_from_mo(lang, app) or {})
+		translations.update(get_translations_from_csv(lang, app) or {})
 	if parent := get_parent_language(lang):
 		parent_translations = get_translations_from_apps(parent, apps)
 		parent_translations.update(translations)

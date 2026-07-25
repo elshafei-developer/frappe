@@ -63,6 +63,7 @@ class User(Document):
 		from frappe.core.doctype.block_module.block_module import BlockModule
 		from frappe.core.doctype.defaultvalue.defaultvalue import DefaultValue
 		from frappe.core.doctype.has_role.has_role import HasRole
+		from frappe.core.doctype.user_account.user_account import UserAccount
 		from frappe.core.doctype.user_email.user_email import UserEmail
 		from frappe.core.doctype.user_role_profile.user_role_profile import UserRoleProfile
 		from frappe.core.doctype.user_session_display.user_session_display import UserSessionDisplay
@@ -70,6 +71,7 @@ class User(Document):
 		from frappe.types import DF
 
 		active_sessions: DF.Table[UserSessionDisplay]
+		allowed_accounts: DF.Table[UserAccount]
 		allowed_in_mentions: DF.Check
 		api_key: DF.Data | None
 		api_secret: DF.Password | None
@@ -322,15 +324,7 @@ class User(Document):
 		self.share_with_self()
 		clear_notifications(user=self.name)
 		frappe.clear_cache(user=self.name)
-		now = frappe.in_test or frappe.flags.in_install
 		self.send_password_notification(self.__new_password)
-		frappe.enqueue(
-			"frappe.core.doctype.user.user.create_contact",
-			user=self,
-			ignore_mandatory=True,
-			now=now,
-			enqueue_after_commit=True,
-		)
 
 		# Set user selected timezone
 		if self.time_zone:

@@ -27,11 +27,6 @@ def update_genders():
 	for gender in (
 		_("Male"),
 		_("Female"),
-		_("Other"),
-		_("Transgender"),
-		_("Genderqueer"),
-		_("Non-Conforming"),
-		_("Prefer not to say"),
 	):
 		doc = frappe.new_doc("Gender")
 		doc.gender = gender

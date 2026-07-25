@@ -94,6 +94,7 @@
   {
    "fieldname": "pincode",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Postal Code",
    "search_index": 1
   },
@@ -105,6 +106,7 @@
   {
    "fieldname": "email_id",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Email Address",
    "options": "Email"
   },
@@ -117,6 +119,7 @@
   {
    "fieldname": "fax",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Fax"
   },
   {

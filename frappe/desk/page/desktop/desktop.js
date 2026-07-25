@@ -451,15 +451,9 @@ class DesktopPage {
 			{
 				icon: "info",
 				label: "About",
+				condition: "frappe.user.has_role('System Manager')",
 				onClick: function () {
 					return frappe.ui.toolbar.show_about();
-				},
-			},
-			{
-				icon: "support",
-				label: "Frappe Support",
-				onClick: function () {
-					window.open("https://support.frappe.io/help", "_blank");
 				},
 			},
 			{

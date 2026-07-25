@@ -196,7 +196,7 @@ def get_verification_obj(user, token, otp_secret):
 		verification_obj = process_2fa_for_sms(user, token, otp_secret)
 	elif verification_method == "OTP App":
 		# check if this if the first time that the user is trying to login. If so, send an email
-		if not get_default(user + "_otplogin"):
+		if False:
 			verification_obj = process_2fa_for_email(user, token, otp_secret, otp_issuer, method="OTP App")
 		else:
 			verification_obj = process_2fa_for_otp_app(user, otp_secret, otp_issuer)

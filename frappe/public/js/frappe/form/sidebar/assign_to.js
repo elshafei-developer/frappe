@@ -204,6 +204,7 @@ frappe.ui.form.AssignToDialog = class AssignToDialog {
 				label: __("Assign To User Group"),
 				fieldtype: "Link",
 				fieldname: "assign_to_user_group",
+				hidden: 1,
 				options: "User Group",
 				onchange: () => me.user_group_list(),
 			},

@@ -21,7 +21,7 @@ login.bind_events = function () {
 		args.pwd = $("#login_password").val();
 		let hasError = false;
 		if (!args.usr) {
-			login.show_field_error("login_email", {{ _("Email is required.") | tojson }});
+			login.show_field_error("login_email", {{ _("User Name is required.") | tojson }});
 			hasError = true;
 		}
 		if (!args.pwd) {

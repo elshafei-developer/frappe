@@ -212,6 +212,12 @@ $.extend(frappe.model, {
 			} else if (df.fieldname === meta.title_field) {
 				// ignore defaults for title field
 				value = "";
+			} else if (default_val.startsWith("eval:")) {
+				try {
+					value = frappe.utils.eval(default_val.substring(5), { doc });
+				} catch (e) {
+					frappe.throw(__('Invalid "Default" expression'));
+				}
 			} else {
 				// is this default value is also allowed as per user permissions?
 				var is_allowed_default =

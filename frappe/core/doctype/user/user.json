@@ -1,7 +1,6 @@
 {
  "actions": [],
  "allow_import": 1,
- "allow_rename": 1,
  "creation": "2022-01-10 17:29:51.672911",
  "description": "Represents a User in the system.",
  "doctype": "DocType",
@@ -34,6 +33,8 @@
   "modules_html",
   "block_modules",
   "home_settings",
+  "allowed_accounts_section",
+  "allowed_accounts",
   "short_bio",
   "gender",
   "birth_date",
@@ -148,6 +149,7 @@
    "label": "First Name",
    "oldfieldname": "first_name",
    "oldfieldtype": "Data",
+   "permlevel": 1,
    "reqd": 1
   },
   {
@@ -155,7 +157,8 @@
    "fieldtype": "Data",
    "label": "Middle Name",
    "oldfieldname": "middle_name",
-   "oldfieldtype": "Data"
+   "oldfieldtype": "Data",
+   "permlevel": 1
   },
   {
    "bold": 1,
@@ -163,7 +166,8 @@
    "fieldtype": "Data",
    "label": "Last Name",
    "oldfieldname": "last_name",
-   "oldfieldtype": "Data"
+   "oldfieldtype": "Data",
+   "permlevel": 1
   },
   {
    "fieldname": "full_name",
@@ -179,7 +183,8 @@
    "depends_on": "eval:doc.__islocal",
    "fieldname": "send_welcome_email",
    "fieldtype": "Check",
-   "label": "Send Welcome Email"
+   "label": "Send Welcome Email",
+   "permlevel": 1
   },
   {
    "default": "0",
@@ -202,6 +207,7 @@
    "in_global_search": 1,
    "in_standard_filter": 1,
    "label": "Username",
+   "permlevel": 1,
    "unique": 1
   },
   {
@@ -269,19 +275,22 @@
    "label": "Gender",
    "oldfieldname": "gender",
    "oldfieldtype": "Select",
-   "options": "Gender"
+   "options": "Gender",
+   "permlevel": 1
   },
   {
    "fieldname": "phone",
    "fieldtype": "Data",
    "label": "Phone",
-   "options": "Phone"
+   "options": "Phone",
+   "permlevel": 1
   },
   {
    "fieldname": "mobile_no",
    "fieldtype": "Data",
    "label": "Mobile No",
    "options": "Phone",
+   "permlevel": 1,
    "unique": 1
   },
   {
@@ -290,13 +299,15 @@
    "label": "Birth Date",
    "no_copy": 1,
    "oldfieldname": "birth_date",
-   "oldfieldtype": "Date"
+   "oldfieldtype": "Date",
+   "permlevel": 1
   },
   {
    "fieldname": "location",
    "fieldtype": "Data",
    "label": "Location",
-   "no_copy": 1
+   "no_copy": 1,
+   "permlevel": 1
   },
   {
    "fieldname": "banner_image",
@@ -310,13 +321,15 @@
   {
    "fieldname": "interest",
    "fieldtype": "Small Text",
-   "label": "Interests"
+   "label": "Interests",
+   "permlevel": 1
   },
   {
    "fieldname": "bio",
    "fieldtype": "Small Text",
    "label": "Bio",
-   "no_copy": 1
+   "no_copy": 1,
+   "permlevel": 1
   },
   {
    "default": "0",
@@ -335,13 +348,15 @@
    "fieldname": "new_password",
    "fieldtype": "Password",
    "label": "Set New Password",
-   "no_copy": 1
+   "no_copy": 1,
+   "permlevel": 1
   },
   {
    "default": "1",
    "fieldname": "logout_all_sessions",
    "fieldtype": "Check",
-   "label": "Logout From All Devices After Changing Password"
+   "label": "Logout From All Devices After Changing Password",
+   "permlevel": 1
   },
   {
    "fieldname": "reset_password_key",
@@ -378,7 +393,8 @@
    "default": "0",
    "fieldname": "document_follow_notify",
    "fieldtype": "Check",
-   "label": "Send Notifications For Documents Followed By Me"
+   "label": "Send Notifications For Documents Followed By Me",
+   "permlevel": 1
   },
   {
    "default": "Daily",
@@ -386,7 +402,8 @@
    "fieldname": "document_follow_frequency",
    "fieldtype": "Select",
    "label": "Frequency",
-   "options": "Hourly\nDaily\nWeekly"
+   "options": "Hourly\nDaily\nWeekly",
+   "permlevel": 1
   },
   {
    "collapsible": 1,
@@ -399,25 +416,29 @@
    "default": "1",
    "fieldname": "thread_notify",
    "fieldtype": "Check",
-   "label": "Send Notifications For Email Threads"
+   "label": "Send Notifications For Email Threads",
+   "permlevel": 1
   },
   {
    "default": "0",
    "fieldname": "send_me_a_copy",
    "fieldtype": "Check",
-   "label": "Send Me A Copy of Outgoing Emails"
+   "label": "Send Me A Copy of Outgoing Emails",
+   "permlevel": 1
   },
   {
    "default": "1",
    "fieldname": "allowed_in_mentions",
    "fieldtype": "Check",
-   "label": "Allowed In Mentions"
+   "label": "Allowed In Mentions",
+   "permlevel": 1
   },
   {
    "fieldname": "email_signature",
    "fieldtype": "Text Editor",
    "label": "Email Signature",
-   "no_copy": 1
+   "no_copy": 1,
+   "permlevel": 1
   },
   {
    "fieldname": "user_emails",
@@ -487,7 +508,8 @@
    "default": "2",
    "fieldname": "simultaneous_sessions",
    "fieldtype": "Int",
-   "label": "Simultaneous Sessions"
+   "label": "Simultaneous Sessions",
+   "permlevel": 1
   },
   {
    "bold": 1,
@@ -530,7 +552,8 @@
    "description": "If enabled,  user can login from any IP Address using Two Factor Auth, this can also be set for all users in System Settings",
    "fieldname": "bypass_restrict_ip_check_if_2fa_enabled",
    "fieldtype": "Check",
-   "label": "Bypass Restricted IP Address Check If Two Factor Auth Enabled"
+   "label": "Bypass Restricted IP Address Check If Two Factor Auth Enabled",
+   "permlevel": 1
   },
   {
    "fieldname": "column_break1",
@@ -585,7 +608,8 @@
    "fieldname": "social_logins",
    "fieldtype": "Table",
    "label": "Social Logins",
-   "options": "User Social Login"
+   "options": "User Social Login",
+   "permlevel": 1
   },
   {
    "collapsible": 1,
@@ -604,7 +628,6 @@
    "unique": 1
   },
   {
-   "description": "<a href=\"https://docs.frappe.io/framework/user/en/api/rest#1-token-based-authentication\" target=\"_blank\">\n  Click here to learn about token-based authentication\n</a>",
    "fieldname": "generate_keys",
    "fieldtype": "Button",
    "label": "Generate Keys",
@@ -643,7 +666,8 @@
    "fieldname": "module_profile",
    "fieldtype": "Link",
    "label": "Module Profile",
-   "options": "Module Profile"
+   "options": "Module Profile",
+   "permlevel": 1
   },
   {
    "description": "Stores the datetime when the last reset password key was generated.",
@@ -663,35 +687,40 @@
    "depends_on": "eval:(doc.document_follow_notify== 1)",
    "fieldname": "follow_created_documents",
    "fieldtype": "Check",
-   "label": "Auto follow documents that you create"
+   "label": "Auto follow documents that you create",
+   "permlevel": 1
   },
   {
    "default": "0",
    "depends_on": "eval:(doc.document_follow_notify== 1)",
    "fieldname": "follow_commented_documents",
    "fieldtype": "Check",
-   "label": "Auto follow documents that you comment on"
+   "label": "Auto follow documents that you comment on",
+   "permlevel": 1
   },
   {
    "default": "0",
    "depends_on": "eval:(doc.document_follow_notify== 1)",
    "fieldname": "follow_liked_documents",
    "fieldtype": "Check",
-   "label": "Auto follow documents that you Like"
+   "label": "Auto follow documents that you Like",
+   "permlevel": 1
   },
   {
    "default": "0",
    "depends_on": "eval:(doc.document_follow_notify== 1)",
    "fieldname": "follow_shared_documents",
    "fieldtype": "Check",
-   "label": "Auto follow documents that are shared with you"
+   "label": "Auto follow documents that are shared with you",
+   "permlevel": 1
   },
   {
    "default": "0",
    "depends_on": "eval:(doc.document_follow_notify== 1)",
    "fieldname": "follow_assigned_documents",
    "fieldtype": "Check",
-   "label": "Auto follow documents that are assigned to you"
+   "label": "Auto follow documents that are assigned to you",
+   "permlevel": 1
   },
   {
    "fieldname": "user_details_tab",
@@ -740,7 +769,8 @@
    "fieldname": "default_workspace",
    "fieldtype": "Link",
    "label": "Default Workspace",
-   "options": "Workspace"
+   "options": "Workspace",
+   "permlevel": 1
   },
   {
    "collapsible": 1,
@@ -765,7 +795,8 @@
    "description": "Redirect to the selected app after login",
    "fieldname": "default_app",
    "fieldtype": "Select",
-   "label": "Default App"
+   "label": "Default App",
+   "permlevel": 1
   },
   {
    "collapsible": 1,
@@ -777,13 +808,15 @@
    "default": "1",
    "fieldname": "search_bar",
    "fieldtype": "Check",
-   "label": "Search Bar"
+   "label": "Search Bar",
+   "permlevel": 1
   },
   {
    "default": "1",
    "fieldname": "notifications",
    "fieldtype": "Check",
-   "label": "Notifications"
+   "label": "Notifications",
+   "permlevel": 1
   },
   {
    "collapsible": 1,
@@ -795,19 +828,22 @@
    "default": "1",
    "fieldname": "list_sidebar",
    "fieldtype": "Check",
-   "label": "Sidebar"
+   "label": "Sidebar",
+   "permlevel": 1
   },
   {
    "default": "1",
    "fieldname": "bulk_actions",
    "fieldtype": "Check",
-   "label": "Bulk Actions"
+   "label": "Bulk Actions",
+   "permlevel": 1
   },
   {
    "default": "1",
    "fieldname": "view_switcher",
    "fieldtype": "Check",
-   "label": "View Switcher"
+   "label": "View Switcher",
+   "permlevel": 1
   },
   {
    "collapsible": 1,
@@ -819,19 +855,22 @@
    "default": "1",
    "fieldname": "form_sidebar",
    "fieldtype": "Check",
-   "label": "Sidebar"
+   "label": "Sidebar",
+   "permlevel": 1
   },
   {
    "default": "1",
    "fieldname": "timeline",
    "fieldtype": "Check",
-   "label": "Timeline"
+   "label": "Timeline",
+   "permlevel": 1
   },
   {
    "default": "1",
    "fieldname": "dashboard",
    "fieldtype": "Check",
-   "label": "Dashboard"
+   "label": "Dashboard",
+   "permlevel": 1
   },
   {
    "default": "0",
@@ -857,6 +896,17 @@
    "fieldname": "form_navigation_buttons",
    "fieldtype": "Check",
    "label": "Navigation Buttons"
+  },
+  {
+   "fieldname": "allowed_accounts_section",
+   "fieldtype": "Section Break",
+   "label": "Allowed Accounts"
+  },
+  {
+   "fieldname": "allowed_accounts",
+   "fieldtype": "Table",
+   "options": "User Account",
+   "permlevel": 1
   }
  ],
  "icon": "fa fa-user",

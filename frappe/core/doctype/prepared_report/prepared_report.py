@@ -79,6 +79,7 @@ class PreparedReport(Document):
 		timeout = frappe.get_value("Report", self.report_name, "timeout")
 		enqueue(
 			generate_report,
+			lang=frappe.local.lang,
 			queue="long",
 			prepared_report=self.name,
 			timeout=timeout or REPORT_TIMEOUT,
@@ -104,7 +105,7 @@ class PreparedReport(Document):
 		return gzip.decompress(attached_file.get_content())
 
 
-def generate_report(prepared_report):
+def generate_report(prepared_report, lang=None):
 	update_job_id(prepared_report)
 
 	instance: PreparedReport = frappe.get_doc("Prepared Report", prepared_report)
@@ -132,7 +133,7 @@ def generate_report(prepared_report):
 		frappe.get_doc(
 			{
 				"doctype": "Notification Log",
-				"subject": f"{instance.report_name} report is ready.",
+				"subject": _("{0} report is ready.", lang).format(_(instance.report_name, lang)),
 				"for_user": frappe.session.user,
 				"type": "Alert",
 				"document_type": "Report",
