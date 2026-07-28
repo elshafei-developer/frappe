@@ -28,45 +28,6 @@
 		</div>
 	</div>
 	<div class="portal-items">
-		<div class="portal-section">
-			<span class="my-account-item-link">
-				<a href="/update-profile/{{ user }}">
-					<svg class="edit-profile-icon icon icon-md">
-						<use href="#icon-edit"></use>
-					</svg>
-					<span class="item-link-text">
-						{{_("Edit Profile") }}
-					</span>
-				</a>
-			</span>
-		</div>
-
-		<div class="portal-section">
-			<span class="my-account-item-link">
-				<a href="/update-password">
-					<svg class="right-icon icon icon-md"><use href="#icon-lock"></use></svg>
-					<span class="item-link-text">{{_("Reset Password") }}</span>
-				</a>
-			</span>
-		</div>
-		<div class="portal-section">
-			<span class="my-account-item-link">
-				<a href="/third_party_apps">
-					<svg class="right-icon icon icon-md"><use href="#icon-web"></use></svg>
-					<span class="item-link-text">{{_("Manage 3rd party apps") }}</span>
-				</a>
-			</span>
-		</div>
-		{% if frappe.db.get_single_value("Website Settings", "show_account_deletion_link") %}
-		<div class="portal-section">
-			<span class="my-account-item-link">
-				<a href="/request-for-account-deletion?new=1">
-					<svg class="icon icon-md"><use href="#icon-trash"></use></svg>
-					<span class="item-link-text">{{_("Delete Account") }}</span>
-				</a>
-			</span>
-		</div>
-		{% endif %}
 	</div>
 </div>
 
