@@ -99,7 +99,7 @@
  "idx": 1,
  "in_create": 1,
  "links": [],
- "modified": "2026-07-01 13:39:45.955563",
+ "modified": "2026-07-30",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Error Log",
@@ -115,6 +115,10 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Developer"
   }
  ],
  "row_format": "Dynamic",
