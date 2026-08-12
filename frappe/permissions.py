@@ -234,10 +234,6 @@ def get_doc_permissions(doc, user=None, ptype=None, debug=False):
 	def is_user_owner():
 		return (doc.get("owner") or "").lower() == user.lower()
 
-	if not has_controller_permissions(doc, ptype, user=user, debug=debug):
-		push_perm_check_log(_("Not allowed via controller permission check"), debug=debug)
-		return {ptype: 0}
-
 	permissions = copy.deepcopy(get_role_permissions(meta, user=user, is_owner=is_user_owner(), debug=debug))
 
 	debug and _debug_log(
@@ -271,6 +267,10 @@ def get_doc_permissions(doc, user=None, ptype=None, debug=False):
 		else:
 			debug and _debug_log("User has no permissions because of User Permissions")
 			permissions = {}
+
+	if not has_controller_permissions(doc, ptype, permissions, user=user, debug=debug):
+		push_perm_check_log(_("Not allowed via controller permission check"), debug=debug)
+		return {ptype: 0}
 
 	debug and _debug_log(
 		"Final applicable permissions after evaluating user permissions: "
@@ -478,7 +478,7 @@ def has_user_permission(doc, user=None, debug=False, *, ptype=None, strict=True)
 	return True
 
 
-def has_controller_permissions(doc, ptype, user=None, debug=False) -> bool:
+def has_controller_permissions(doc, ptype, permissions, user=None, debug=False) -> bool:
 	"""Return controller permissions if denied, True if not defined.
 
 	Controllers can only deny permission, they can not explicitly grant any permission that wasn't
@@ -488,9 +488,16 @@ def has_controller_permissions(doc, ptype, user=None, debug=False) -> bool:
 
 	hooks = frappe.get_hooks("has_permission")
 	methods = hooks.get(doc.doctype, []) + hooks.get("*", [])
+	org_permissions = copy.deepcopy(permissions)
 
 	for method in reversed(methods):
-		controller_permission = frappe.call(method, doc=doc, ptype=ptype, user=user, debug=debug)
+		controller_permission = frappe.call(
+			method, doc=doc, ptype=ptype, permissions=permissions, user=user, debug=debug
+		)
+		if permissions != org_permissions:
+			for key, value in permissions.items():
+				if org_permissions.get(key) == 0 and value == 1:
+					permissions[key] = 0
 		debug and _debug_log(f"Controller permission check from {method}: {controller_permission}")
 		if not controller_permission:
 			return bool(controller_permission)
